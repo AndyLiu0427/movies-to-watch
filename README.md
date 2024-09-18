@@ -1,5 +1,15 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Set Up Environment Variables
+
+Register at [TMDB](https://developer.themoviedb.org/docs/authentication-application) and obtain API and token
+Create a new file named `.env` in the root of your project and add the following content:
+
+```env
+VITE_QUICKNODE_ENDPOINT = "YOUR_QUICKNODE_ENDPOINT_URL"
+VITE_PRIVATE_KEY = "YOUR_WALLET_PRIVATE_KEY"
+```
+
 ## Getting Started
 
 First, run the development server:
