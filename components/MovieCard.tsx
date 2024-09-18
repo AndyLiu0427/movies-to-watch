@@ -6,6 +6,7 @@ import { useWatchlist } from '@/hooks/useWatchlist'
 import { Star } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useId } from 'react'
+import { useAuth } from '@/context/AuthContextType'
 
 export interface MovieProp {
   id: number;
@@ -30,17 +31,22 @@ function MovieCard({ movie, index }: Prop) {
   const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlist()
   const router = useRouter()
   const uniqueId = useId()
+  const { user } = useAuth()
 
   if (!movie || typeof movie !== 'object' || !('id' in movie)) {
     return null
   }
 
-  const handleWatchlistClick = (e: React.MouseEvent) => {
+  const handleWatchlistClick = async (e: React.MouseEvent) => {
     e.stopPropagation()
+    if (!user) {
+      // Redirect to login or show login modal
+      return
+    }
     if (isInWatchlist(movie.id)) {
-      removeFromWatchlist(movie.id)
+      await removeFromWatchlist(movie.id)
     } else {
-      addToWatchlist(movie)
+      await addToWatchlist(movie)
     }
   }
 

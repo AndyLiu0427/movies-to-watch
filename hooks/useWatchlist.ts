@@ -1,40 +1,55 @@
 import { useState, useEffect } from 'react'
 import { MovieProp } from '@/components/MovieCard'
+import { useAuth } from '@/context/AuthContextType'
+import { doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
+import { db } from '@/lib/firebase' // Ensure you've exported Firestore instance as 'db'
 
 export function useWatchlist() {
   const [watchlist, setWatchlist] = useState<MovieProp[]>([])
+  const { user } = useAuth()
 
   useEffect(() => {
-    const storedWatchlist = localStorage.getItem('watchlist')
-    if (storedWatchlist) {
-      try {
-        const parsedWatchlist = JSON.parse(storedWatchlist)
-        if (Array.isArray(parsedWatchlist)) {
-          setWatchlist(parsedWatchlist.filter((movie): movie is MovieProp => 
-            movie !== null && typeof movie === 'object' && 'id' in movie
-          ))
-        }
-      } catch (error) {
-        console.error('解析 localStorage 中的 Watchlist 時出錯:', error)
-        setWatchlist([])
-      }
-    }
-  }, [])
+    if (user) {
+      const fetchWatchlist = async () => {
+        const docRef = doc(db, 'watchlists', user.uid)
+        const docSnap = await getDoc(docRef)
 
-  const addToWatchlist = (movie: MovieProp) => {
-    setWatchlist(prevWatchlist => {
-      const updatedWatchlist = [...prevWatchlist, movie]
-      localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist))
-      return updatedWatchlist
-    })
+        if (docSnap.exists()) {
+          setWatchlist(docSnap.data().movies)
+        } else {
+          setWatchlist([])
+          await setDoc(docRef, { movies: [] })
+        }
+      }
+      console.log('fetchWatchlist', fetchWatchlist)
+      fetchWatchlist()
+    } else {
+      setWatchlist([])
+    }
+  }, [user])
+
+  const addToWatchlist = async (movie: MovieProp) => {
+    if (user) {
+      const docRef = doc(db, 'watchlists', user.uid)
+      await updateDoc(docRef, {
+        movies: arrayUnion(movie)
+      })
+      console.log('docRef', docRef)
+      setWatchlist(prev => [...prev, movie])
+    }
   }
 
-  const removeFromWatchlist = (movieId: number) => {
-    setWatchlist(prevWatchlist => {
-      const updatedWatchlist = prevWatchlist.filter(movie => movie.id !== movieId)
-      localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist))
-      return updatedWatchlist
-    })
+  const removeFromWatchlist = async (movieId: number) => {
+    if (user) {
+      const docRef = doc(db, 'watchlists', user.uid)
+      const movieToRemove = watchlist.find(m => m.id === movieId)
+      if (movieToRemove) {
+        await updateDoc(docRef, {
+          movies: arrayRemove(movieToRemove)
+        })
+        setWatchlist(prev => prev.filter(m => m.id !== movieId))
+      }
+    }
   }
 
   const isInWatchlist = (movieId: number) => {
