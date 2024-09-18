@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import Footer from "@/components/Layout/Footer";
 
 import "./globals.css";
+import { AuthProvider } from "@/context/AuthContextType";
 
 const dmSans = DM_Sans({ subsets: ["latin"] });
 
@@ -21,12 +22,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${dmSans.className} bg-[#0F1117]`}>
-        <Navbar />
-        <main className="pt-16 mx-auto bg-[#0F1117] max-w-screen-xl w-full">
-          <Hero />
-          {children}
-          <Footer />
-        </main>
+        <AuthProvider>
+          <Navbar />
+          <main className="pt-16 mx-auto bg-[#0F1117] max-w-screen-xl w-full">
+            <Hero />
+            {children}
+            <Footer />
+          </main>
+        </AuthProvider>
       </body>
     </html>
   );
