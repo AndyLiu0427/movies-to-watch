@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo } from 'react'
 import { useInView } from "react-intersection-observer"
 import MovieCard, { MovieProp } from "@/components/MovieCard"
