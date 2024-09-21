@@ -21,7 +21,7 @@ export function useWatchlist() {
           await setDoc(docRef, { movies: [] })
         }
       }
-      console.log('fetchWatchlist', fetchWatchlist)
+
       fetchWatchlist()
     } else {
       setWatchlist([])
@@ -30,12 +30,15 @@ export function useWatchlist() {
 
   const addToWatchlist = async (movie: MovieProp) => {
     if (user) {
-      const docRef = doc(db, 'watchlists', user.uid)
-      await updateDoc(docRef, {
-        movies: arrayUnion(movie)
-      })
-      console.log('docRef', docRef)
-      setWatchlist(prev => [...prev, movie])
+      try {
+        const docRef = doc(db, 'watchlists', user.uid)
+        await setDoc(docRef, {
+          movies: arrayUnion(movie)
+        }, { merge: true })
+        setWatchlist(prev => [...prev, movie])
+      } catch (error) {
+        console.error('Error adding to watchlist:', error)
+      }
     }
   }
 
