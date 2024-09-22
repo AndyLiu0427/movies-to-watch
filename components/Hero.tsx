@@ -1,10 +1,24 @@
+import Image from "next/image";
+
 function Hero() {
   return (
-    <header className="bg-hero bg-center bg-cover bg-no-repeat sm:p-16 py-16 px-8 flex lg:items-center max-lg:flex-col w-full sm:gap-16 gap-0">
-      <div className=" flex flex-col gap-10">
-        <h1 className="sm:text-6xl text-2xl text-white lg:max-w-2xl font-bold leading-[120%]">
-          上百萬部電影、電視節目和人物在<span className="text-yellow-500">等你探索。</span>
-        </h1>
+    <header className="relative w-full h-[50vh] sm:h-[60vh] flex items-center">
+      <Image
+        src="/hero_1.webp"
+        alt="Hero background"
+        layout="fill"
+        objectFit="cover"
+        quality={90}
+        priority
+        className="z-0"
+      />
+      <div className="container mx-auto px-8 sm:px-16 relative z-10">
+        <div className="flex flex-col gap-10 max-w-2xl">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl text-white font-bold leading-[120%]">
+            上百萬部電影、電視節目和人物在
+            <span className="text-yellow-500">等你探索。</span>
+          </h1>
+        </div>
       </div>
     </header>
   );

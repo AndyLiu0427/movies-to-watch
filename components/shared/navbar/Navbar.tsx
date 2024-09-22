@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { LogOut, User, Menu, Clapperboard } from 'lucide-react'
+import { LogOut, Menu, Clapperboard } from 'lucide-react'
 
 export const Navbar = () => {
   const { user, signOut, signIn } = useAuth()
@@ -75,9 +75,9 @@ export const Navbar = () => {
           </div>
           <div className="ml-4 flex items-center">
             <div className="md:hidden">
-              <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+              <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen} >
                 <SheetTrigger asChild>
-                  <Button variant="ghost">
+                  <Button variant="ghost" aria-label="Menu">
                     <Menu className="h-6 w-6" />
                   </Button>
                 </SheetTrigger>

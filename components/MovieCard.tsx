@@ -7,6 +7,7 @@ import { Star } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useId } from 'react'
 import { useAuth } from '@/context/AuthContextType'
+import { Button } from './ui/button';
 
 export interface MovieProp {
   id: number;
@@ -83,17 +84,18 @@ function MovieCard({ movie, index }: Prop) {
           <div className="absolute top-2 right-2 bg-yellow-400 text-gray-900 font-bold rounded-full px-2 py-1 text-sm">
             {movie.vote_average.toFixed(1)}
           </div>
-          <button
+          <Button
             className="absolute top-2 left-2 p-1 rounded-full bg-gray-800 bg-opacity-50 transition-colors duration-200"
             onClick={handleWatchlistClick}
             id={`watchlist-button-${uniqueId}`}
+            aria-label="Like"
           >
             <Star
               size={24}
               className={`${isWatchlisted ? 'text-yellow-400' : 'text-gray-300'} transition-colors duration-200`}
               fill={isWatchlisted ? 'currentColor' : 'none'}
             />
-          </button>
+          </Button>
         </div>
         <div className="p-4">
           <h2 className="text-lg font-semibold mb-2 truncate">{movie.title}</h2>
