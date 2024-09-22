@@ -14,7 +14,8 @@ interface MovieDetailsProps {
 }
 
 export default function MovieDetails({ id }: MovieDetailsProps) {
-  const { data: movie, error } = useSWR(`/movie/${id}`, () => getMovieDetails(id))
+  const numericId = parseInt(id);
+  const { data: movie, error } = useSWR(`/movie/${numericId}`, () => getMovieDetails(numericId))
   const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlist()
 
   useEffect(() => {
@@ -24,11 +25,11 @@ export default function MovieDetails({ id }: MovieDetailsProps) {
   if (error) return <div>Failed to load movie details</div>
   if (!movie) return <Loading />
 
-  const isWatchlisted = isInWatchlist(parseInt(id))
+  const isWatchlisted = isInWatchlist(numericId)
 
   const handleWatchlistClick = () => {
     if (isWatchlisted) {
-      removeFromWatchlist(parseInt(id))
+      removeFromWatchlist(numericId)
     } else {
       addToWatchlist(movie)
     }

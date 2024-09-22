@@ -8,27 +8,20 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import Image from 'next/image';
 import styles from './WatchLottery.module.css';
+import { Movie } from '@/types/movie';
 
 function WatchLottery() {
   const { watchlist } = useWatchlist();
-  const [selectedMovie, setSelectedMovie] = useState<any | null>(null);
-  const [isSpinning, setIsSpinning] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const wheelRef = useRef<SVGGElement>(null);
 
-  const colors = [
-    '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A',
-    '#98D8C8', '#F9ED69', '#F08A5D', '#B83B5E'
-  ];
-  console.log(watchlist);
   const spinWheel = () => {
     if (watchlist.length === 0) return;
 
-    setIsSpinning(true);
     setSelectedMovie(null);
     const randomIndex = Math.floor(Math.random() * watchlist.length); // 隨機選擇的電影索引
     const spins = 10; // 總旋轉圈數
@@ -41,11 +34,9 @@ function WatchLottery() {
       wheelRef.current.style.transform = `rotate(${degrees}deg)`;
       wheelRef.current.style.transition = 'transform 5s cubic-bezier(0.25, 0.1, 0.25, 0.1)';
     }
-    console.log(watchlist[randomIndex]);
 
     setTimeout(() => {
       setSelectedMovie(watchlist[randomIndex]);
-      setIsSpinning(false);
     }, 5000);
   };
 
