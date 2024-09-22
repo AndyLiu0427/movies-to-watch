@@ -6,8 +6,8 @@ function Hero() {
       <Image
         src="/hero_1.webp"
         alt="Hero background"
-        layout="fill"
-        objectFit="cover"
+        fill
+        style={{ objectFit: "cover" }}
         quality={90}
         priority
         className="z-0"

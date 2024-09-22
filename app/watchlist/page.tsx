@@ -10,14 +10,14 @@ import Loading from '../feed/loading';
 
 export default function WatchlistPage() {
   const { watchlist } = useWatchlist();
-  const { user, loading, signOut, signIn } = useAuth();
+  const { user, loading, signIn } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (!loading && !user) {
       signIn();
     }
-  }, [user, loading, router]);
+  }, [user, loading, router, signIn]);
 
   if (loading) {
     return <Loading />;

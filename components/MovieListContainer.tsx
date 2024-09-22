@@ -5,9 +5,10 @@ import SortControls from './shared/sort/SortControls'
 import { MovieProp } from "@/components/MovieCard"
 import { fetchMovies } from "@/services/api"
 import dynamic from 'next/dynamic';
+import { Movie } from '@/types/movie';
 
 interface MovieListContainerProps {
-  initialData: any
+  initialData: Array<Movie>;
   query: string
 }
 
@@ -17,7 +18,7 @@ const MovieList = dynamic(() => import('./MovieList'), {
 })
 
 export default function MovieListContainer({ initialData, query }: MovieListContainerProps) {
-  const [movies, setMovies] = useState<MovieProp[]>(initialData.results || initialData)
+  const [movies, setMovies] = useState<MovieProp[]>(initialData)
   const [sortBy, setSortBy] = useState('')
   const [isAsc, setIsAsc] = useState(true)
   const [page, setPage] = useState(2)
@@ -33,7 +34,7 @@ export default function MovieListContainer({ initialData, query }: MovieListCont
     if (isLoading) return
     setIsLoading(true)
     try {
-      const newMovies = await fetchMovies(page, query)
+      const newMovies = await fetchMovies(page)
       if (newMovies.length === 0) {
         setHasMore(false)
       } else {

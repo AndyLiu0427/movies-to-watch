@@ -52,8 +52,8 @@ export default function MovieList({ initialMovies, sortBy, isAsc, loadMore, hasM
   return (
     <>
       <section className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
-        {sortedMovies.map((movie: MovieProp) => (
-          <MovieCard key={movie.id} movie={movie} />
+        {sortedMovies.map((movie: MovieProp, index: number) => (
+          <MovieCard key={movie.id} movie={movie} index={index} />
         ))}
         {isLoading && placeholderCards}
       </section>

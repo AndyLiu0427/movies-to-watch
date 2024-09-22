@@ -28,21 +28,21 @@ export default function Footer() {
           <div className="flex items-center gap-6">
             <Image
               src="./tiktok.svg"
-              alt="logo"
+              alt="tiktok"
               width={24}
               height={24}
               className="object-contain"
             />
             <Image
               src="./instagram.svg"
-              alt="logo"
+              alt="instagram"
               width={24}
               height={24}
               className="object-contain"
             />
             <Image
               src="./twitter.svg"
-              alt="logo"
+              alt="twitter"
               width={24}
               height={24}
               className="object-contain"
