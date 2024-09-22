@@ -34,7 +34,7 @@ function SortSelector ({ onSortChange, currentSort }: SortSelectorProps) {
       value={currentSort || 'default'}
       onValueChange={handleValueChange}
     >
-      <SelectTrigger className="w-[180px] text-white">
+      <SelectTrigger className="w-[180px] text-white" aria-label="Sort movies">
         <SelectValue className="text-white" placeholder="選擇排序方式" />
       </SelectTrigger>
       <SelectContent>

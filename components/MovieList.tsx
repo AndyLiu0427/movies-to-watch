@@ -1,20 +1,32 @@
 "use client";
 
-import { useMemo } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 import { useInView } from "react-intersection-observer"
 import MovieCard, { MovieProp } from "@/components/MovieCard"
 import Image from "next/image"
 
 interface MovieListProps {
-  movies: MovieProp[]
+  initialMovies: MovieProp[]
   sortBy: string
   isAsc: boolean
   loadMore: () => Promise<void>
   hasMore: boolean
+  isLoading: boolean
 }
 
-export default function MovieList({ movies, sortBy, isAsc, loadMore, hasMore }: MovieListProps) {
+export default function MovieList({ initialMovies, sortBy, isAsc, loadMore, hasMore, isLoading }: MovieListProps) {
+  const [movies, setMovies] = useState<MovieProp[]>([]);
   const { ref, inView } = useInView()
+
+  useEffect(() => {
+    setMovies(initialMovies);
+  }, [initialMovies]);
+
+  useEffect(() => {
+    if (inView && hasMore && !isLoading) {
+      loadMore()
+    }
+  }, [inView, hasMore, isLoading, loadMore])
 
   const sortedMovies = useMemo(() => {
     if (!sortBy) return movies
@@ -31,30 +43,33 @@ export default function MovieList({ movies, sortBy, isAsc, loadMore, hasMore }: 
     })
   }, [movies, sortBy, isAsc])
 
-  if (inView && hasMore) {
-    loadMore()
-  }
+  const placeholderCards = useMemo(() => {
+    return Array(8).fill(0).map((_, index) => (
+      <div key={`placeholder-${index}`} className="rounded-lg overflow-hidden aspect-[2/3] animate-pulse" />
+    ))
+  }, [])
 
   return (
     <>
-      <section className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-10">
-        {sortedMovies.map((movie: MovieProp, index: number) => (
-          <MovieCard key={movie.id} movie={movie} index={index} />
+      <section className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
+        {sortedMovies.map((movie: MovieProp) => (
+          <MovieCard key={movie.id} movie={movie} />
         ))}
+        {isLoading && placeholderCards}
       </section>
-      <section className="flex justify-center items-center w-full">
+      <section className="flex justify-center items-center w-full h-20 mt-8">
         {hasMore ? (
           <div ref={ref}>
             <Image
-              src="./spinner.svg"
-              alt="spinner"
+              src="/spinner.svg"
+              alt="載入中"
               width={56}
               height={56}
               className="object-contain"
             />
           </div>
         ) : (
-          <div>No more movies to load</div>
+          <div className="text-white">沒有更多電影了</div>
         )}
       </section>
     </>

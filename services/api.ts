@@ -1,6 +1,6 @@
 "use server";
 
-import MovieCard, { MovieProp } from "@/components/MovieCard";
+import { MovieProp } from "@/components/MovieCard";
 import { MovieDetails } from "@/types/movie";
 
 const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
@@ -9,6 +9,9 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 
 if (!API_KEY) {
   throw new Error('TMDB API key is not defined');
+}
+if (!API_TOKEN) {
+  throw new Error('TMDB API token is not defined');
 }
 
 const headers = {
