@@ -1,46 +1,42 @@
+# Movies to watch
+demo: https://movies-to-watch-vfie.vercel.app/
+## 簡介
+這個專案使用了 TMDB API 和 Firebase 來提供電影數據和後端服務。請按照以下步驟設置環境變數以便專案正常運行。
+
+## 環境變數設置
+
+請在專案根目錄下創建一個 `.env.local` 文件，並添加以下內容：
+
+```shell
+NEXT_PUBLIC_TMDB_API_KEY=你的TMDB API金鑰
+NEXT_PUBLIC_TMDB_API_TOKEN=你的TMDB API令牌
+
+NEXT_PUBLIC_FIREBASE_API_KEY=你的Firebase API金鑰
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=你的Firebase Auth Domain
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=你的Firebase Project ID
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=你的Firebase Storage Bucket
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=你的Firebase Messaging Sender ID
+NEXT_PUBLIC_FIREBASE_APP_ID=你的Firebase App ID
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=你的Firebase Measurement ID
+```
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Set Up Environment Variables
+## 獲取 TMDB API 金鑰和令牌
+ 1. 註冊並登錄 TMDB.
+ 2. 前往 API 頁面。
+ 3. 創建一個新的 API 金鑰和令牌，並將它們填入 .env.local 文件中的 NEXT_PUBLIC_TMDB_API_KEY 和 NEXT_PUBLIC_TMDB_API_TOKEN。
 
-Register at [TMDB](https://developer.themoviedb.org/docs/authentication-application) and obtain API and token
-Create a new file named `.env` in the root of your project and add the following content:
+## 獲取 Firebase 配置
+ 1. 註冊並登錄 Firebase.
+ 2. 創建一個新的專案或使用現有專案。
+ 3. 前往專案設置頁面，找到 Firebase SDK 配置，並將相應的值填入 .env.local 文件中的對應字段。
 
-```env
-VITE_QUICKNODE_ENDPOINT = "YOUR_QUICKNODE_ENDPOINT_URL"
-VITE_PRIVATE_KEY = "YOUR_WALLET_PRIVATE_KEY"
-```
-
-## Getting Started
-
-First, run the development server:
-
-```bash
+## 啟動專案
+設置好環境變數後，可以使用以下命令啟動專案：
+```shell
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+這將啟動開發伺服器，在瀏覽器中訪問 http://localhost:3000 查看專案。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
